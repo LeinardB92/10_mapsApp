@@ -1,7 +1,5 @@
-import { AfterViewInit, Component } from '@angular/core';
-import * as mapboxgl from 'mapbox-gl';
-
-(mapboxgl.accessToken as any) = 'pk.eyJ1IjoicGludG9yLXJhbW9uZXMiLCJhIjoiY2xocWphZWxwMmZnODNkbzNqazMwMTJ1YiJ9.IZQ-9nVJFTXObQ4z57yGyQ';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {Map} from 'mapbox-gl';
 
 @Component({
   selector: 'app-full-screen-page',
@@ -10,9 +8,14 @@ import * as mapboxgl from 'mapbox-gl';
 })
 export class FullScreenPageComponent implements AfterViewInit {
 
+  //toma la referencia local del .html '#map'
+  @ViewChild('map') divMap?: ElementRef;
+
   ngAfterViewInit(): void {
-    const map = new mapboxgl.Map({
-      container: 'map', // container ID
+    if ( !this.divMap ) throw 'El elemento HTML no fue encontrado';
+
+    const map = new Map({
+      container: this.divMap.nativeElement, // container ID
       style: 'mapbox://styles/mapbox/streets-v12', // style URL
       center: [-74.5, 40], // starting position [lng, lat]
       zoom: 9, // starting zoom

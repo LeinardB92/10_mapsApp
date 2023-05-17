@@ -24,13 +24,37 @@ export class ZoomRangePageComponent implements AfterViewInit {
       center: this.currentLngLat,
       zoom: this.zoom, // starting zoom
     });
+
+    this.mapListeners()
+  }
+
+  mapListeners() {
+    if ( !this.map ) throw 'Mapa no inicializado';
+
+    this.map.on('zoom', (ev) => {
+      this.zoom = this.map!.getZoom();
+    });
+
+    this.map.on('zoomend', (ev) => {
+      if ( this.map!.getZoom() < 18 ) return;
+      this.map!.zoomTo(18);
+    });
+
+    this.map.on('move', () => {
+      this.currentLngLat = this.map!.getCenter();
+    });
   }
 
   zoomOut(){
-    return;
+    this.map?.zoomIn();
   };
 
   zoomIn(){
-    return;
+    this.map?.zoomOut();
   };
+
+  zoomChanged( value: string ) {
+    this.zoom = Number(value);
+    this.map?.zoomTo( this.zoom );
+  }
 }

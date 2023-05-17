@@ -7,7 +7,11 @@
     <input type="range"
     class="form-range px-2"
     min="-2"
-    max="18">
+    max="18"
+    [value]="zoom"
+    (input)="zoomChanged( zoomInput.value )"
+    #zoomInput
+    >
 
     <button (click)="zoomIn()" class="btn btn-primary"> + </button>
   </div>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { LngLat, Map } from "mapbox-gl";
 
 @Component({
@@ -6,7 +6,8 @@ import { LngLat, Map } from "mapbox-gl";
   templateUrl: './zoom-range-page.component.html',
   styleUrls: ['./zoom-range-page.component.css']
 })
-export class ZoomRangePageComponent implements AfterViewInit {
+export class ZoomRangePageComponent implements AfterViewInit, OnDestroy {
+
 
   @ViewChild('map') divMap?: ElementRef;
 
@@ -28,6 +29,10 @@ export class ZoomRangePageComponent implements AfterViewInit {
     this.mapListeners()
   }
 
+  ngOnDestroy(): void {
+    this.map?.remove();
+  }
+
   mapListeners() {
     if ( !this.map ) throw 'Mapa no inicializado';
 
@@ -45,11 +50,11 @@ export class ZoomRangePageComponent implements AfterViewInit {
     });
   }
 
-  zoomOut(){
+  zoomIn(){
     this.map?.zoomIn();
   };
 
-  zoomIn(){
+  zoomOut(){
     this.map?.zoomOut();
   };
 

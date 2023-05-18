@@ -67,7 +67,7 @@ export class MarkersPageComponent implements AfterViewInit{
 
       this.saveToLocalStorage();
 
-      marker.on('dragend', () => this.saveToLocalStorage() );
+    marker.on('dragend', () => this.saveToLocalStorage() );
   }
 
 
@@ -119,6 +119,5 @@ export class MarkersPageComponent implements AfterViewInit{
 
       this.createMarker( coords, color );
     })
-
   }
 }
